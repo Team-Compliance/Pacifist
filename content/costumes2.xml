@@ -1,0 +1,3 @@
+<costumes anm2root="gfx/characters/">
+    <costume id="Pacifist" anm2path="662_pacifist.anm2" type="passive" />
+</costumes>
