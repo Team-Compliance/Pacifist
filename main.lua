@@ -8,13 +8,14 @@ local PacdescRu = "Дает награду предметами на следу�
 local PacdescSpa = "Genera recolectables en el siguiente piso en función a cuantas habitaciones no limpiaste en el piso actual"
 
 if MiniMapiItemsAPI then
-    local frame = 0
-    local pacifistSprite = Sprite()
-    pacifistSprite:Load("gfx/ui/minimapitems/pacifist_icon.anm2", true)
-    MiniMapiItemsAPI:AddCollectible(CollectibleType.COLLECTIBLE_PACIFIST, pacifistSprite, "CustomIconPacifist", frame)
+	local pacifistIcon = Sprite()
+	pacifistIcon:Load("gfx/ui/minimapitems/pacifist_icon.anm2", true)	
+    MiniMapiItemsAPI:AddCollectible(CollectibleType.COLLECTIBLE_PACIFIST, pacifistIcon, "CustomIconPacifist", 0)
 end
 
 if EID then
+	EID:setModIndicatorName("Pacifist")
+
     EID:addCollectible(CollectibleType.COLLECTIBLE_PACIFIST, Pacdesc, "Pacifist")
 	EID:addCollectible(CollectibleType.COLLECTIBLE_PACIFIST, PacdescRu, "Пацифист", "ru")
 	EID:addCollectible(CollectibleType.COLLECTIBLE_PACIFIST, PacdescSpa, "Pacifista", "spa")
@@ -37,15 +38,6 @@ function mod:PacifistEffect(player)
 	local level = Game():GetLevel()
 	local room = level:GetCurrentRoom()
 	if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
-		for i = 0, DoorSlot.NUM_DOOR_SLOTS do
-			local door = room:GetDoor(i)
-			if door then
-				if not door:IsLocked() then
-					door:Open()
-				end
-			end
-		end
-		
 		local sprite = player:GetSprite()
 		if sprite:IsPlaying("Trapdoor") and PickupsToSpawn == 0 then
 			local rooms = level:GetRooms()
