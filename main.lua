@@ -31,98 +31,48 @@ if Encyclopedia then
 	})
 end
 
-PacifistMod.RoomsCleared = 0 --these dont need to be player data since its global to all players
-PacifistMod.PickupsToSpawn = 0
-PacifistMod.CurrentLevelRooms = -1
+local PickupsToSpawn = 0
 
-function mod:OnGetPacifist(player)
-	local seeds = Game():GetSeeds()
-
+function mod:PacifistEffect(player)
+	local level = Game():GetLevel()
+	local room = level:GetCurrentRoom()
 	if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
-		if not seeds:HasSeedEffect(SeedEffect.SEED_PACIFIST) then
-			--seeds:AddSeedEffect(SeedEffect.SEED_PACIFIST) 
-			--this has to be manually recreated.
+		for i = 0, DoorSlot.NUM_DOOR_SLOTS do
+			local door = room:GetDoor(i)
+			if door then
+				if not door:IsLocked() then
+					door:Open()
+				end
+			end
+		end
+		
+		local sprite = player:GetSprite()
+		if sprite:IsPlaying("Trapdoor") and PickupsToSpawn == 0 then
+			local rooms = level:GetRooms()
+			local clearedRooms = 0
+			for i = 0, rooms.Size - 1 do
+				local room = rooms:Get(i)
+				if room.Clear then
+					clearedRooms = clearedRooms + 1
+				end
+			end
+			
+			PickupsToSpawn = level:GetRoomCount() - clearedRooms
 		end
 	end
 end
---mod:AddCallback(ModCallbacks.MC_POST_PEFFECT_UPDATE, mod.OnGetPacifist)
-
-function mod:CheckRooms()
-	PacifistMod.CurrentLevelRooms = PacifistMod.CurrentLevelRooms < 0 and Game():GetLevel():GetRoomCount() or PacifistMod.CurrentLevelRooms
-	if mod:WasRoomJustCleared() then
-		print("room was cleared")
-		PacifistMod.RoomsCleared = PacifistMod.RoomsCleared + 1
-		PacifistMod.PickupsToSpawn = PacifistMod.CurrentLevelRooms - PacifistMod.RoomsCleared
-	end
-end
-mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.CheckRooms)
+mod:AddCallback(ModCallbacks.MC_POST_PLAYER_UPDATE, mod.PacifistEffect)
 
 function mod:PickupsDrop() --spawn pickups every level after pickup
 	for p = 0, Game():GetNumPlayers() - 1 do
 		local player = Game():GetPlayer(p)
 		if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
-			for i = 1, PacifistMod.PickupsToSpawn do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_NULL, 0, Isaac.GetFreeNearPosition(player.Position, 1), Vector.Zero, player)
+			for i = 1, PickupsToSpawn do
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_NULL, 2, Game():GetRoom():FindFreePickupSpawnPosition(player.Position, 0, true), Vector.Zero, player)
 			end
 		end
 	end
-
-	PacifistMod.CurrentLevelRooms = Game():GetLevel():GetRoomCount()
+	
+	PickupsToSpawn = 0
 end
 mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, mod.PickupsDrop)
-
-function mod:onStart(isContinued)
-	PacifistMod.CurrentLevelRooms = Game():GetLevel():GetRoomCount()
-	if isContinued and mod:HasData() then
-		PacifistMod.RoomsCleared = mod:LoadData()
-	end
-end
-mod:AddCallback(ModCallbacks.MC_POST_GAME_STARTED, mod.onStart)
-
-function mod:onExit(isSaving)
-	PacifistMod.CurrentLevelRooms = Game():GetLevel():GetRoomCount()
-	if isSaving then
-		mod:SaveData(PacifistMod.RoomsCleared)
-	end
-end
-mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onExit)
-
------------------------------------
---Helper Functions (thanks piber)--
------------------------------------
-
---returns true if the room was just cleared
-local roomWasCleared = true
-local roomWasJustCleared = false
-function mod:WasRoomJustCleared()
-	return roomWasJustCleared
-end
-mod:AddCallback(ModCallbacks.MC_POST_UPDATE, function()
-
-	local game = Game()
-	local room = game:GetRoom()
-
-	local roomIsCleared = room:GetAliveEnemiesCount() == 0 and not room:IsClear()
-
-	roomWasJustCleared = false
-	if roomIsCleared and not roomWasCleared then
-		roomWasJustCleared = true
-	end
-	
-	roomWasCleared = roomIsCleared
-end)
-mod:AddCallback(ModCallbacks.MC_POST_NEW_LEVEL, function()
-	roomWasJustCleared = false
-	roomWasCleared = true
-	PacifistMod.RoomsCleared = 0
-	PacifistMod.PickupsToSpawn = 0
-end)
-mod:AddCallback(ModCallbacks.MC_POST_NEW_ROOM, function()
-	roomWasJustCleared = false
-	roomWasCleared = true
-	local room = Game():GetRoom()
-	if room:IsClear() and room:IsFirstVisit() then
-		PacifistMod.RoomsCleared = PacifistMod.RoomsCleared + 1
-		PacifistMod.PickupsToSpawn = PacifistMod.CurrentLevelRooms - PacifistMod.RoomsCleared
-	end
-end)
