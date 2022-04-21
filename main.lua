@@ -3,7 +3,7 @@ local mod = PacifistMod
 
 CollectibleType.COLLECTIBLE_PACIFIST = Isaac.GetItemIdByName("Pacifist")
 
-local Pacdesc = "Gives pickup rewards on the next floor based on how many rooms you haven't cleared on the current floor"
+local Pacdesc = "Gives pickup rewards at the start of a floor based on how many rooms you haven't cleared on the previous floor"
 local PacdescRu = "Дает награду предметами на следующем этаже в зависимости от того, сколько комнат вы не зачистили на текущем"
 local PacdescSpa = "Genera recolectables en el siguiente piso en función a cuantas habitaciones no limpiaste en el piso actual"
 
@@ -35,21 +35,19 @@ end
 local PickupsToSpawn = 0
 
 function mod:PacifistEffect(player)
-	local level = Game():GetLevel()
-	local room = level:GetCurrentRoom()
-	if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
-		local sprite = player:GetSprite()
-		if sprite:IsPlaying("Trapdoor") and PickupsToSpawn == 0 then
+	local sprite = player:GetSprite()
+	if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) and sprite:IsPlaying("Trapdoor") then
+		if PickupsToSpawn == 0 then
+			local level = Game():GetLevel()
 			local rooms = level:GetRooms()
-			local clearedRooms = 0
 			for i = 0, rooms.Size - 1 do
 				local room = rooms:Get(i)
-				if room.Clear then
-					clearedRooms = clearedRooms + 1
+				if room.Data.Type ~= RoomType.ROOM_SUPERSECRET and room.Data.Type ~= RoomType.ROOM_ULTRASECRET then -- based off of world card which doesn't reveal these
+					if not room.Clear then
+						PickupsToSpawn = PickupsToSpawn + 1
+					end
 				end
 			end
-			
-			PickupsToSpawn = level:GetRoomCount() - clearedRooms
 		end
 	end
 end
@@ -60,6 +58,7 @@ function mod:PickupsDrop() --spawn pickups every level after pickup
 		local player = Game():GetPlayer(p)
 		if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
 			if PickupsToSpawn > 0 then
+				SFXManager():Play(SoundEffect.SOUND_THUMBSUP, 1, 0)
 				player:AnimateHappy()
 			end
 			
