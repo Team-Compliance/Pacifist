@@ -15,6 +15,7 @@ end
 
 if EID then
 	EID:setModIndicatorName("Pacifist")
+	EID:setModIndicatorIcon("Collectible".. CollectibleType.COLLECTIBLE_PACIFIST)
 
     EID:addCollectible(CollectibleType.COLLECTIBLE_PACIFIST, Pacdesc, "Pacifist")
 	EID:addCollectible(CollectibleType.COLLECTIBLE_PACIFIST, PacdescRu, "Пацифист", "ru")
@@ -26,8 +27,7 @@ if Encyclopedia then
 	  ID = CollectibleType.COLLECTIBLE_PACIFIST,
 	  WikiDesc = Encyclopedia.EIDtoWiki(Pacdesc),
 	  Pools = {
-		Encyclopedia.ItemPools.POOL_ANGEL,
-		Encyclopedia.ItemPools.POOL_GREED_ANGEL,
+		Encyclopedia.ItemPools.POOL_ANGEL
 	  },
 	})
 end
@@ -59,6 +59,10 @@ function mod:PickupsDrop() --spawn pickups every level after pickup
 	for p = 0, Game():GetNumPlayers() - 1 do
 		local player = Game():GetPlayer(p)
 		if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
+			if PickupsToSpawn > 0 then
+				player:AnimateHappy()
+			end
+			
 			for i = 1, PickupsToSpawn do
 				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_NULL, 2, Game():GetRoom():FindFreePickupSpawnPosition(player.Position, 0, true), Vector.Zero, player)
 			end
