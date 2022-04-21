@@ -1,8 +1,6 @@
 PacifistMod = RegisterMod("Pacifist", 1)
 local mod = PacifistMod
 
-local vectorZero = Vector.Zero or Vector(0,0)
-
 CollectibleType.COLLECTIBLE_PACIFIST = Isaac.GetItemIdByName("Pacifist")
 
 local Pacdesc = "Gives pickup rewards on the next floor based on how many rooms you haven't cleared on the current floor"
@@ -52,6 +50,7 @@ end
 function mod:CheckRooms()
 	PacifistMod.CurrentLevelRooms = PacifistMod.CurrentLevelRooms < 0 and Game():GetLevel():GetRoomCount() or PacifistMod.CurrentLevelRooms
 	if mod:WasRoomJustCleared() then
+		print("room was cleared")
 		PacifistMod.RoomsCleared = PacifistMod.RoomsCleared + 1
 		PacifistMod.PickupsToSpawn = PacifistMod.CurrentLevelRooms - PacifistMod.RoomsCleared
 	end
@@ -59,11 +58,11 @@ end
 mod:AddCallback(ModCallbacks.MC_POST_UPDATE, mod.CheckRooms)
 
 function mod:PickupsDrop() --spawn pickups every level after pickup
-	for playerNum = 0, Game():GetNumPlayers() - 1 do
-		local player = Game():GetPlayer(playerNum)
+	for p = 0, Game():GetNumPlayers() - 1 do
+		local player = Game():GetPlayer(p)
 		if player:HasCollectible(CollectibleType.COLLECTIBLE_PACIFIST) then
 			for i = 1, PacifistMod.PickupsToSpawn do
-				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_NULL, 0, Isaac.GetFreeNearPosition(player.Position, 1), vectorZero, player)
+				Isaac.Spawn(EntityType.ENTITY_PICKUP, PickupVariant.PICKUP_NULL, 0, Isaac.GetFreeNearPosition(player.Position, 1), Vector.Zero, player)
 			end
 		end
 	end
@@ -87,6 +86,7 @@ function mod:onExit(isSaving)
 	end
 end
 mod:AddCallback(ModCallbacks.MC_PRE_GAME_EXIT, mod.onExit)
+
 -----------------------------------
 --Helper Functions (thanks piber)--
 -----------------------------------
