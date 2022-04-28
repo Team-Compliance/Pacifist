@@ -1,8 +1,65 @@
+<?xml version="1.1" encoding="UTF-8"?>
 <metadata>
-	<name>pacifist</name>
-	<directory>pacifist</directory>
-	<description/>
-	<version>1.0</version>
-	<visibility/>
+    <name>Pacifist</name>
+    <directory>pacifist</directory>
+    <id>2800203259</id>
+    <description>Make love, not war with Pacifist, a cut item from Repentance! Will you skip rooms in order to gain rewards?
+
+[img]https://i.imgur.com/zx4jgfI.png[/img]
+
+[b][h1]----------------------------- 𝐏𝐚𝐜𝐢𝐟𝐢𝐬𝐭 ----------------------------[/h1][/b]
+[img]https://i.imgur.com/xmBeV6I.png[/img]
+[i]Make love, not war[/i] | Quality: 2
+[list]
+[*][u][b]Item Pools[/b][/u] 
+[list]
+[*][img]https://i.imgur.com/rkmPKKx.png[/img] Angel [img]https://i.imgur.com/rkmPKKx.png[/img]
+[/list]
+[/list]
+[list]
+[*][u][b]Effects[/b][/u]  
+[list]
+[*]Gives [b]pickup rewards[/b] at the start of a floor based on how many rooms the player [b]hasn't cleared[/b] on the previous floor
+[/list]
+[/list]
+[list]
+[*][u][b]Synergies[/b][/u]  
+[list]
+[*][img]https://i.imgur.com/Dz63REn.png[/img] [b]Abyss[/b] = Spawns a locust that can [b]charm[/b] enemies on contact
+[/list]
+[/list]
+[b][h1]----------------------- 𝐌𝐨𝐝 𝐂𝐨𝐦𝐩𝐚𝐭𝐢𝐛𝐢𝐥𝐢𝐭𝐲 ----------------------[/h1][/b][list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=836319872]External Item Descriptions[/url] (English [img]https://i.imgur.com/11ORCm6.png[/img] Español [img]https://i.imgur.com/BCCFhHE.png[/img] Pусский [img]https://i.imgur.com/vFcOh4w.png[/img])
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2376005362]Encyclopedia[/url]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2487535818]Minimap Items[/url]
+[/list]
+[img]https://i.imgur.com/9Lz5VfQ.png[/img]
+[list]
+[*][u]𝐃𝐢𝐫𝐞𝐜𝐭𝐨𝐫, 𝐆𝐫𝐚𝐩𝐡𝐢𝐜 𝐃𝐞𝐬𝐢𝐠𝐧𝐞𝐫[/u] = [url=https://steamcommunity.com/profiles/76561198374458982/]Sillst[/url]
+[*][u]𝐂𝐨𝐝𝐞𝐫𝐬[/u] = [url=https://steamcommunity.com/id/anchikai]anchikai.[/url], [url=https://steamcommunity.com/id/kittenchilly]kittenchilly[/url]
+[*][u]𝐓𝐫𝐚𝐧𝐬𝐥𝐚𝐭𝐨𝐫𝐬[/u] = [url=https://steamcommunity.com/id/brakedude]BrakeDude[/url], [url=https://steamcommunity.com/profiles/76561198813796283]Kotry[/url]
+[*][u]𝐏𝐥𝐚𝐲𝐭𝐞𝐬𝐭𝐞𝐫𝐬[/u]= [url=https://steamcommunity.com/id/kittenchilly]kittenchilly[/url], [url=https://steamcommunity.com/profiles/76561198374458982/]Sillst[/url]
+[/list]
+
+[img]https://i.imgur.com/3en8OyU.png[/img]
+[code]Aether, Akad, ALADAR, anchikai., Blind the Bound Demon, Blixy, BrakeDude, cat,,, Firework, fly_6, Goncholito, Kars, KitsuneMedia, kittenchilly, Kotry, Luigi124, Merlin, Michael¿?, PixelPlz, poody_blue, Royal, Sillst, Soaring__Sky, The Demisemihemidemisemiquaver[/code]
+
+[img]https://i.imgur.com/SlXbHql.png[/img] [img]https://i.imgur.com/xd2eafr.png[/img]
+[code][u]_Kilburn[/u] - For the original Pacifist concept
+[u]Preyn[/u] - For stylistic inspiration in the image gallery
+[u]All of you[/u] - For checking us out and supporting us :)[/code]
+
+[img]https://i.imgur.com/NRi98lu.png[/img]
+[img]https://i.imgur.com/OZNWMCq.png[/img] [url=https://github.com/Team-Compliance/Pacifist]Pacifist Repository[/url] [img]https://i.imgur.com/OZNWMCq.png[/img] 
+[img]https://i.imgur.com/xK4Mor0.png[/img] [url=https://discord.gg/GdVnkV4Gwj]TBOI: Compliance Discord Server[/url] [img]https://i.imgur.com/xK4Mor0.png[/img]
+[img]https://i.imgur.com/69jZFo8.png[/img] [url=https://www.reddit.com/r/TBOICompliance/]TBOI: Compliance Subreddit[/url] [img]https://i.imgur.com/69jZFo8.png[/img]
+[img]https://i.imgur.com/GmVPmG0.png[/img] [url=https://www.youtube.com/channel/UCEdAioGltx_hOsyDW57nvSw/featured]TBOI: Compliance YouTube[/url] [img]https://i.imgur.com/GmVPmG0.png[/img]
+[img]https://i.imgur.com/jBFg02x.png[/img] [url=https://twitter.com/ComplianceMods]TBOI: Compliance Twitter[/url] [img]https://i.imgur.com/jBFg02x.png[/img]
+
+[img]https://i.imgur.com/MTKQKCX.png[/img]</description>
+    <version>1.1</version>
+    <visibility>Public</visibility>
+    <tag id="Lua"/>
+    <tag id="Items"/>
 </metadata>
 
